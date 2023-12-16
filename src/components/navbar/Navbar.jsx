@@ -51,7 +51,7 @@ const Navbar = () => {
                     </Link>
                 ))}
 
-                <button className={styles.logout} >
+                <button className={styles.logout} onClick={() => console.log('logout')}>
                     Logout
                 </button>
 
