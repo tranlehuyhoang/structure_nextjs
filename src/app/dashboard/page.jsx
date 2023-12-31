@@ -39,7 +39,6 @@ const Dashboard = () => {
 
     //NEW WAY TO FETCH DATA
     const fetcher = (...args) => fetch(...args).then((res) => res.json());
-    console.log(session)
     const { data, mutate, error, isLoading } = useSWR(
         `/api/posts?username=${session?.data?.user.name}`,
         fetcher
@@ -56,15 +55,24 @@ const Dashboard = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const title = e.target[0].value;
-        const desc = e.target[1].value;
-        const img = e.target[2].value;
-        const content = e.target[3].value;
-
+        const slug = e.target[1].value;
+        const desc = e.target[2].value;
+        const img = e.target[3].value;
+        const content = e.target[4].value;
+        console.log({
+            title,
+            slug,
+            desc,
+            img,
+            content,
+            username: session.data.user.name,
+        })
         try {
             await fetch("/api/posts", {
                 method: "POST",
                 body: JSON.stringify({
                     title,
+                    slug,
                     desc,
                     img,
                     content,
@@ -113,6 +121,7 @@ const Dashboard = () => {
                 <form className={styles.new} onSubmit={handleSubmit}>
                     <h1>Add New Post</h1>
                     <input type="text" placeholder="Title" className={styles.input} />
+                    <input type="text" placeholder="Slug" className={styles.input} />
                     <input type="text" placeholder="Desc" className={styles.input} />
                     <input type="text" placeholder="Image" className={styles.input} />
                     <textarea

@@ -4,8 +4,9 @@ import styles from "./page.module.css";
 import Link from "next/link";
 import Image from "next/image";
 
-async function getData() {
-  const res = await fetch("http://localhost:3000/api/posts", {
+import { useRouter, useSearchParams } from 'next/navigation'
+async function getData(page) {
+  const res = await fetch(`http://localhost:3000/api/posts?page=${page}`, {
     cache: "no-store",
   });
 
@@ -20,12 +21,17 @@ async function getData() {
 }
 
 const Blog = async () => {
-  const data = await getData();
+  const searchParams = useSearchParams()
+
+  const page = searchParams.get('page') ?? '1'
+  const per_page = searchParams.get('per_page') ?? '5'
+  console.log('page ==>', page)
+  const data = await getData(page);
 
   return (
     <div className={styles.mainContainer}>
-      {data.map((item) => (
-        <Link href={`/blog/${item._id}`} className={styles.container} key={item.id}>
+      {data.posts.map((item) => (
+        <Link href={`/blog/${item.slug}`} className={styles.container} key={item.id}>
           <div className={styles.imageContainer}>
             <Image
               src={item.img}
@@ -39,6 +45,11 @@ const Blog = async () => {
             <h1 className={styles.title}>{item.title}</h1>
             <p className={styles.desc}>{item.desc}</p>
           </div>
+        </Link>
+      ))}
+      {Array.from({ length: data.totalPages }, (_, index) => (
+        <Link href={`/blog?page=${index + 1}`} key={index}>
+          <button className={styles.button}>{index + 1}</button>
         </Link>
       ))}
     </div>
