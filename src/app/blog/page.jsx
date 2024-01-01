@@ -6,7 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 async function getData() {
-  const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL;
+ 
   const res = await fetch(`https://ps26819-blog.vercel.app/api/posts`, {
     cache: "no-store",
   });
