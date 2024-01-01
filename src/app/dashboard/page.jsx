@@ -108,7 +108,7 @@ const Dashboard = () => {
                         : data?.posts.map((post) => (
                             <div className={styles.post} key={post._id}>
                                 <div className={styles.imgContainer}>
-                                    <Image src={post.img} alt="" width={200} height={100} />
+                                    <Image src={post.img || 'https://images.pexels.com/photos/2916450/pexels-photo-2916450.jpeg'} alt="" width={200} height={100} />
                                 </div>
                                 <h2 className={styles.postTitle}>{post.title}</h2>
                                 <Link href={`./dashboard/${post.slug}`} >

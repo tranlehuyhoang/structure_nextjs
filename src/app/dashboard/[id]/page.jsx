@@ -16,7 +16,6 @@ async function getData(slug) {
 }
 
 async function updatePost(slug, updatedData) {
-  const router = useRouter();
 
   const res = await fetch(`http://localhost:3000/api/posts/${slug}`, {
     method: "PUT",
@@ -25,7 +24,6 @@ async function updatePost(slug, updatedData) {
     },
     body: JSON.stringify(updatedData),
   });
-  router.push("/next-page");
 
   if (!res.ok) {
     throw new Error("Failed to update post");
@@ -35,6 +33,8 @@ async function updatePost(slug, updatedData) {
 }
 
 const EditPost = ({ params }) => {
+  const router = useRouter();
+
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -79,6 +79,8 @@ const EditPost = ({ params }) => {
       };
 
       await updatePost(params.id, updatedData);
+      router.push("/dashboard");
+
     } catch (error) {
       setError(error.message);
     }
