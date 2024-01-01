@@ -1,13 +1,13 @@
-"use client "
-import React from "react";
+ 
+ 
+   import React from "react";
 import styles from "./page.module.css";
 import Link from "next/link";
 import Image from "next/image";
 
-import { useRouter, useSearchParams } from 'next/navigation'
-async function getData(page, search) {
-
-  const res = await fetch(`https://ps26819-blog.vercel.app/api/posts?page=${page}&search=${search}`, {
+async function getData() {
+  const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL;
+  const res = await fetch(`https://ps26819-blog.vercel.app/api/posts`, {
     cache: "no-store",
   });
   if (!res.ok) {
@@ -21,12 +21,8 @@ async function getData(page, search) {
 }
 
 const Blog = async () => {
-  const searchParams = useSearchParams()
 
-  const page = searchParams.get('page') ?? '1'
-  const search = searchParams.get('search') ?? ''
-  console.log('page ==>', page)
-  const data = await getData(page, search);
+  const data = await getData();
 
   return (
     <div className={styles.mainContainer}>
@@ -58,3 +54,4 @@ const Blog = async () => {
 };
 
 export default Blog;
+
