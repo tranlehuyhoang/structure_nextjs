@@ -7,7 +7,7 @@ import Image from "next/image";
 import { useRouter, useSearchParams } from 'next/navigation'
 async function getData(page, search) {
   const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL;
-  const res = await fetch(`${baseUrl}//api/posts?page=${page}&search=${search}`, {
+  const res = await fetch(`https://ps26819-blog.vercel.app/api/posts?page=${page}&search=${search}`, {
     cache: "no-store",
   });
   if (!res.ok) {
