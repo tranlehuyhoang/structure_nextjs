@@ -4,8 +4,8 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 
 async function getData(slug) {
-
-  const res = await fetch(`https://ps26819-blog.vercel.app/api/posts/${slug}`, {
+  const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL;
+  const res = await fetch(`${baseUrl}/api/posts/${slug}`, {
     cache: "no-store",
   });
 
