@@ -12,26 +12,14 @@ const links = [
         title: "Home",
         url: "/",
     },
-    {
-        id: 2,
-        title: "Portfolio",
-        url: "/portfolio",
-    },
+
     {
         id: 3,
         title: "Blog",
         url: "/blog",
     },
-    {
-        id: 4,
-        title: "About",
-        url: "/about",
-    },
-    {
-        id: 5,
-        title: "Contact",
-        url: "/contact",
-    },
+
+
     {
         id: 6,
         title: "Dashboard",
@@ -56,7 +44,11 @@ const Navbar = () => {
                 ))}
                 {session.status === "authenticated" && (
                     <button className={styles.logout} onClick={signOut}>
-                        Logout
+                        {session?.data?.user?.image ? (
+                            <img width={'50px'} height={'50px'} src={session?.data?.user?.image} alt="" srcset="" />
+                        ) : (
+                            <span>hello:{session?.data?.user?.name}  Logout</span>
+                        )}
                     </button>
                 )}
 

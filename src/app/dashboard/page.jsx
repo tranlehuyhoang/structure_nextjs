@@ -5,6 +5,7 @@ import useSWR from "swr";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 
 const Dashboard = () => {
 
@@ -34,7 +35,7 @@ const Dashboard = () => {
     // }, []);
 
     const session = useSession();
-
+    console.log('session', session)
     const router = useRouter();
 
     //NEW WAY TO FETCH DATA
@@ -100,15 +101,18 @@ const Dashboard = () => {
     if (session.status === "authenticated") {
         return (
             <div className={styles.container}>
+
                 <div className={styles.posts}>
                     {isLoading
                         ? "loading"
-                        : data?.map((post) => (
+                        : data?.posts.map((post) => (
                             <div className={styles.post} key={post._id}>
                                 <div className={styles.imgContainer}>
                                     <Image src={post.img} alt="" width={200} height={100} />
                                 </div>
                                 <h2 className={styles.postTitle}>{post.title}</h2>
+                                <Link href={`./dashboard/${post.slug}`} >
+                                    Edit</Link>
                                 <span
                                     className={styles.delete}
                                     onClick={() => handleDelete(post._id)}

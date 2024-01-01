@@ -65,6 +65,14 @@ const Login = ({ url }) => {
       >
         Login with Google
       </button>
+      <button
+        onClick={() => {
+          signIn("github");
+        }}
+        className={styles.button + " " + styles.google}
+      >
+        Login with Github
+      </button>
       <span className={styles.or}>- OR -</span>
       <Link className={styles.link} href="/dashboard/register">
         Create new account

@@ -5,11 +5,11 @@ import Link from "next/link";
 import Image from "next/image";
 
 import { useRouter, useSearchParams } from 'next/navigation'
-async function getData(page) {
-  const res = await fetch(`http://localhost:3000/api/posts?page=${page}`, {
+async function getData(page, search) {
+  const res = await fetch(`http://localhost:3000/api/posts?page=${page}&search=${search}`, {
     cache: "no-store",
   });
-
+  console.log(`http://localhost:3000/api/posts?page=${page}&search=${search}`)
   if (!res.ok) {
     throw new Error("Failed to fetch data");
   }
@@ -24,12 +24,13 @@ const Blog = async () => {
   const searchParams = useSearchParams()
 
   const page = searchParams.get('page') ?? '1'
-  const per_page = searchParams.get('per_page') ?? '5'
+  const search = searchParams.get('search') ?? ''
   console.log('page ==>', page)
-  const data = await getData(page);
+  const data = await getData(page, search);
 
   return (
     <div className={styles.mainContainer}>
+
       {data.posts.map((item) => (
         <Link href={`/blog/${item.slug}`} className={styles.container} key={item.id}>
           <div className={styles.imageContainer}>
