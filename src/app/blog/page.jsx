@@ -66,9 +66,4 @@ const Blog = () => {
   );
 };
 
-<<<<<<< HEAD
 export default Blog;
-=======
-export default Blog;
-
->>>>>>> c9937b8ae04fa1d5b42601963db38ff2d0e9c386
