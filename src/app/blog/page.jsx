@@ -6,10 +6,10 @@ import Image from "next/image";
 
 import { useRouter, useSearchParams } from 'next/navigation'
 async function getData(page, search) {
-  const res = await fetch(`http://localhost:3000/api/posts?page=${page}&search=${search}`, {
+  const res = await fetch(`https://ps26819-blog.vercel.app/api/posts?page=${page}&search=${search}`, {
     cache: "no-store",
   });
-  console.log(`http://localhost:3000/api/posts?page=${page}&search=${search}`)
+  console.log(`https://ps26819-blog.vercel.app/api/posts?page=${page}&search=${search}`)
   if (!res.ok) {
     throw new Error("Failed to fetch data");
   }

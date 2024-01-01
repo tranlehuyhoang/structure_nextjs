@@ -4,7 +4,7 @@ import styles from "./page.module.css";
 import { useRouter } from 'next/navigation'
 
 async function getData(slug) {
-  const res = await fetch(`http://localhost:3000/api/posts/${slug}`, {
+  const res = await fetch(`https://ps26819-blog.vercel.app/api/posts/${slug}`, {
     cache: "no-store",
   });
 
@@ -17,7 +17,7 @@ async function getData(slug) {
 
 async function updatePost(slug, updatedData) {
 
-  const res = await fetch(`http://localhost:3000/api/posts/${slug}`, {
+  const res = await fetch(`https://ps26819-blog.vercel.app/api/posts/${slug}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",

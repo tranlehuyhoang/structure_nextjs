@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 
 async function getData(slug) {
 
-  const res = await fetch(`http://localhost:3000/api/posts/${slug}`, {
+  const res = await fetch(`https://ps26819-blog.vercel.app/api/posts/${slug}`, {
     cache: "no-store",
   });
 
