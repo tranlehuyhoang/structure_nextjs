@@ -1,36 +1,47 @@
-"use client"
-import React from "react";
+'use client'
+
+import React, { useState, useEffect } from "react";
 import styles from "./page.module.css";
 import Link from "next/link";
 import Image from "next/image";
 
-import { useRouter, useSearchParams } from 'next/navigation'
-async function getData(page, search) {
-  const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL;
-  const res = await fetch(`https://ps26819-blog.vercel.app/api/posts?page=${page}&search=${search}`, {
-    cache: "no-store",
-  });
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
+
+const Blog = () => {
+  const [page, setPage] = useState(1);
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch(`/api/posts?page=${page}`, {
+          cache: "no-store",
+        });
+
+        if (!res.ok) {
+          throw new Error("Failed to fetch data");
+        }
+
+        const data = await res.json();
+        setData(data);
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+
+    fetchData();
+  }, [page]);
+
+  if (error) {
+    return <div>Error: {error}</div>;
   }
 
-  const data = await res.json();
-  console.log(data);
-
-  return data;
-}
-
-const Blog = async () => {
-  const searchParams = useSearchParams()
-
-  const page = searchParams.get('page') ?? '1'
-  const search = searchParams.get('search') ?? ''
-  console.log('page ==>', page)
-  const data = await getData(page, search);
+  if (!data) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className={styles.mainContainer}>
-
       {data.posts.map((item) => (
         <Link href={`/blog/${item.slug}`} className={styles.container} key={item.id}>
           <div className={styles.imageContainer}>
@@ -49,9 +60,7 @@ const Blog = async () => {
         </Link>
       ))}
       {Array.from({ length: data.totalPages }, (_, index) => (
-        <Link href={`/blog?page=${index + 1}`} key={index}>
-          <button className={styles.button}>{index + 1}</button>
-        </Link>
+        <button onClick={() => setPage(index + 1)} key={index} className={styles.button}>{index + 1}</button>
       ))}
     </div>
   );
